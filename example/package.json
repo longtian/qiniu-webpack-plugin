@@ -1,0 +1,17 @@
+{
+  "name": "qiniu-webpack-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:development": "webpack"
+  },
+  "author": "wyvernnot",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "file-loader": "^0.8.5",
+    "moment": "^2.12.0",
+    "webpack": "^1.12.14"
+  }
+}

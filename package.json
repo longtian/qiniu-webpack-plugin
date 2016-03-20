@@ -1,0 +1,27 @@
+{
+  "name": "qiniu-webpack-plugin",
+  "version": "0.0.0",
+  "description": "Webpack plugin for Qiniu cloud storage",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyvernnot/qiniu-webpack-plugin.git"
+  },
+  "keywords": [
+    "qiniu",
+    "webpack",
+    "plugin"
+  ],
+  "author": "wyvernnot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wyvernnot/qiniu-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/wyvernnot/qiniu-webpack-plugin#readme",
+  "dependencies": {
+    "qiniu": "^6.1.9"
+  }
+}
