@@ -4,6 +4,9 @@
   "description": "Webpack plugin for Qiniu cloud storage",
   "main": "index.js",
   "scripts": {
+    "release:minor": "npm version minor && npm publish --reg=https://registry.npmjs.com",
+    "release:patch": "npm version patch && npm publish --reg=https://registry.npmjs.com",
+    "prepublish": "npm run-script compile",
     "compile": "rimraf example/public && rimraf lib && babel src --copy-files --source-maps --extensions .es6 --out-dir lib",
     "example:dev": "npm run-script compile && webpack -d --config example/webpack.dev.js",
     "example:production": "npm run-script compile && NODE_ENV=production webpack -p --config example/webpack.production.js"
