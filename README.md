@@ -4,7 +4,7 @@
 [![](https://img.shields.io/coveralls/wyvernnot/qiniu-webpack-plugin.svg)](https://coveralls.io/github/wyvernnot/qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/dm/qiniu-webpack-plugin.svg)](http://npm-stat.com/charts.html?package=qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/l/qiniu-webpack-plugin.svg)](https://github.com/wyvernnot/qiniu-webpack-plugin/blob/master/LICENSE)
-> 把 `Webpack` 打包出来的 `assets` 上传到 `Qiniu` 云存储上。
+> 把 Webpack 打包出来的 assets 加上 compilation 的 hash 传到 七牛云存储上。
 
 
 ## 安装
@@ -22,26 +22,31 @@ var QiniuPlugin = require('qiniu-webpack-plugin');
 
 主要有两项
 
-- 基本的 `ACCESS_KEY`,`SECRET_KEY`, `bucket`
-- Webpack 的 `output.publicPath` 需要指向七牛云或自定义的域名地址，最后要加上 `/[hash]/`
+- 基本的 `ACCESS_KEY`,`SECRET_KEY`, `bucket` 与七牛云设置一致。
+- Webpack 的 `output.publicPath` 指向七牛云（或自定义的）域名地址，最后一定要加上 `/[hash]/`
 
 
 ```js
+
+// 这里配置 Plugin
 var qiniuPlugin = new QiniuPlugin({
   ACCESS_KEY: '',
   SECRET_KEY: '',
   bucket: 'my-qiniu-webpack'
 });
 
+// 这里是 Webpack 的配置
 module.exports={
  output:{
+    // 这里是七牛的域名加上 Webpack 的 hash
     publicPath:"http://7xs30h.com1.z0.glb.clouddn.com/[hash]/"
+    // ..
  },
  plugins:[
    qiniuPlugin
-   ...
+   // ...
  ]
- ...
+ // ...
 }
 ```
 
@@ -60,4 +65,4 @@ https://github.com/wyvernnot/qiniu-webpack-plugin/tree/master/example
 
 ## 版权声明
 
-`Qiniu` 是上海七牛信息技术有限公司的注册商标， `QiniuPlugin` 是我自己写的模块，并不是官方的，采用 MIT 开源协议。
+`Qiniu` 是上海七牛信息技术有限公司的注册商标， `qiniu-webpack-plugin` 是本人自己写的模块，非官方，采用 MIT 开源协议发布。
