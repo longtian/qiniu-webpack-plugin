@@ -4,7 +4,7 @@
 [![](https://img.shields.io/coveralls/wyvernnot/qiniu-webpack-plugin.svg)](https://coveralls.io/github/wyvernnot/qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/dm/qiniu-webpack-plugin.svg)](http://npm-stat.com/charts.html?package=qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/l/qiniu-webpack-plugin.svg)](https://github.com/wyvernnot/qiniu-webpack-plugin/blob/master/LICENSE)
-> 把 Webpack 打包出来的 assets 加上 compilation 的 hash 传到 七牛云存储上。
+> 把 Webpack 打包出来的 assets 加上 compilation 的 hash 前缀传到 七牛云存储上。
 
 
 ## 安装
