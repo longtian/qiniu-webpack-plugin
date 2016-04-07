@@ -15,12 +15,15 @@ class QiniuPlugin {
       let assets = compilation.assets;
       let hash = compilation.hash;
       let {
-        bucket
+        bucket,
+        path = "[hash]"
       } = this.options;
+
+      path = path.replace("[hash]",hash);
 
       let promises = Object.keys(assets).filter(fileName=>assets[fileName].emitted).map(fileName=> {
 
-        let key = `${hash}/${fileName}`;
+        let key = `${path}/${fileName}`;
         let putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         let token = putPolicy.token();
         let extra = new qiniu.io.PutExtra();

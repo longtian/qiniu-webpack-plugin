@@ -8,7 +8,8 @@ devConfig.plugins = devConfig.plugins || [];
 devConfig.plugins.push(new QiniuPlugin({
   ACCESS_KEY: '',
   SECRET_KEY: '',
-  bucket: 'my-qiniu-webpack'
+  bucket: '',
+  path: require('child_process').execSync('git describe').toString().replace(/\n/,'')
 }))
 
 devConfig.output.publicPath = "http://7xs30h.com1.z0.glb.clouddn.com/[hash]/";
