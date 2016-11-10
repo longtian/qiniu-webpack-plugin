@@ -25,17 +25,21 @@ class QiniuPlugin {
       let promises = Object.keys(assets).filter(fileName=> {
         let valid = assets[fileName].emitted;
         if (include) {
-          valid = valid && include.some(includeFileName => includeFileName == fileName);
+          valid = valid && include.some(includeFileName => {
+              if (includeFileName instanceof RegExp) {
+                return includeFileName.test(fileName);
+              } else {
+                return includeFileName == fileName
+              }
+            });
         }
         return valid;
       }).map(fileName=> {
-        console.log("fileName: " + fileName + "\n");
         let key = `${path}/${fileName}`;
         let putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         let token = putPolicy.token();
         let extra = new qiniu.io.PutExtra();
         
-        // @TODO show progress
         let promise = new Promise((resolve, reject)=> {
           let begin = Date.now();
           qiniu.io.putFile(token, key, assets[fileName].existsAt, extra, function (err, ret) {

@@ -22,7 +22,7 @@ var QiniuPlugin = require('qiniu-webpack-plugin');
 
 - `ACCESS_KEY`,`SECRET_KEY`, `bucket` 与七牛云设置一致
 - `path` 存储的路径，默认为 `[hash]`
-- `include` 可选项。你可以选择上传的文件，比如`['main.js']``
+- `include` 可选项。你可以选择上传的文件，比如`['main.js']``或者`[/main/]`
 
 另外
 
