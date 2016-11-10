@@ -7,27 +7,34 @@ class QiniuPlugin {
     qiniu.conf.ACCESS_KEY = this.options.ACCESS_KEY;
     qiniu.conf.SECRET_KEY = this.options.SECRET_KEY;
   }
-
+  
   apply(compiler) {
-
+    
     compiler.plugin('after-emit', (compilation, callback)=> {
-
+      
       let assets = compilation.assets;
       let hash = compilation.hash;
       let {
         bucket,
-        path = "[hash]"
+        path = "[hash]",
+        include,
       } = this.options;
-
-      path = path.replace("[hash]",hash);
-
-      let promises = Object.keys(assets).filter(fileName=>assets[fileName].emitted).map(fileName=> {
-
+      
+      path = path.replace("[hash]", hash);
+      
+      let promises = Object.keys(assets).filter(fileName=> {
+        let valid = assets[fileName].emitted;
+        if (include) {
+          valid = valid && include.some(includeFileName => includeFileName == fileName);
+        }
+        return valid;
+      }).map(fileName=> {
+        console.log("fileName: " + fileName + "\n");
         let key = `${path}/${fileName}`;
         let putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         let token = putPolicy.token();
         let extra = new qiniu.io.PutExtra();
-
+        
         // @TODO show progress
         let promise = new Promise((resolve, reject)=> {
           let begin = Date.now();
@@ -42,10 +49,10 @@ class QiniuPlugin {
             }
           });
         });
-
+        
         return promise;
       });
-
+      
       Promise
         .all(promises)
         .then(res=> {
@@ -55,7 +62,7 @@ class QiniuPlugin {
         .catch(e=> {
           callback(e);
         });
-
+      
     });
   }
 }
