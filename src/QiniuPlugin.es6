@@ -35,7 +35,7 @@ class QiniuPlugin {
         }
         return valid;
       }).map(fileName=> {
-        let key = `${path}/${fileName}`;
+        let key = `${path}${fileName}`;
         let putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         let token = putPolicy.token();
         let extra = new qiniu.io.PutExtra();
