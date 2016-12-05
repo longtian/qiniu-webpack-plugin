@@ -1,5 +1,6 @@
 import qiniu from 'qiniu';
 import Promise from 'promise';
+import {join} from 'path';
 
 class QiniuPlugin {
   constructor(options) {
@@ -35,7 +36,7 @@ class QiniuPlugin {
         }
         return valid;
       }).map(fileName=> {
-        let key = `${path}/${fileName}`;
+        let key = join(path, fileName);
         let putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         let token = putPolicy.token();
         let extra = new qiniu.io.PutExtra();
