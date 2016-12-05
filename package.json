@@ -7,10 +7,17 @@
     "release:minor": "npm version minor && npm publish --reg=https://registry.npmjs.com",
     "release:patch": "npm version patch && npm publish --reg=https://registry.npmjs.com",
     "prepublish": "npm run-script compile",
-    "compile": "rimraf example/public && rimraf lib && babel src --copy-files --source-maps --extensions .es6 --out-dir lib",
+    "compile": "rimraf example/public && rimraf lib && babel src --copy-files --source-maps --out-dir lib",
     "example:dev": "npm run-script compile && webpack -d --config example/webpack.dev.js",
     "example:production": "npm run-script compile && NODE_ENV=production webpack -p --config example/webpack.production.js",
-    "eslint": "eslint --ext .es6 --ext .js ./src"
+    "eslint": "eslint src",
+    "test": "eslint src && jest && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*"
+    ]
   },
   "repository": {
     "type": "git",
@@ -40,6 +47,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "bootstrap": "^3.3.6",
+    "coveralls": "^2.11.15",
     "css-loader": "^0.26.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
