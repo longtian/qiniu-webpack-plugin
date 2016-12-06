@@ -5,6 +5,9 @@ import { join } from 'path';
 class QiniuPlugin {
 
   constructor(options) {
+    if (!options || !options.ACCESS_KEY || !options.SECRET_KEY) {
+      throw new Error('ACCESS_KEY and SECRET_KEY must be provided');
+    }
     this.options = Object.assign({}, options);
     qiniu.conf.ACCESS_KEY = this.options.ACCESS_KEY;
     qiniu.conf.SECRET_KEY = this.options.SECRET_KEY;
