@@ -1,9 +1,11 @@
 # qiniu-webpack-plugin
 [![](https://img.shields.io/npm/v/qiniu-webpack-plugin.svg)](https://www.npmjs.com/package/qiniu-webpack-plugin)
 [![](https://img.shields.io/travis/wyvernnot/qiniu-webpack-plugin.svg)](https://travis-ci.org/wyvernnot/qiniu-webpack-plugin)
+[![](https://img.shields.io/appveyor/ci/wyvernnot/qiniu-webpack-plugin.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZyBmaWxsPSIjMUJBMUUyIiB0cmFuc2Zvcm09InNjYWxlKDgpIj48cGF0aCBkPSJNMCAyLjI2NWw2LjUzOS0uODg4LjAwMyA2LjI4OC02LjUzNi4wMzd6Ii8%2BPHBhdGggZD0iTTYuNTM2IDguMzlsLjAwNSA2LjI5My02LjUzNi0uODk2di01LjQ0eiIvPjxwYXRoIGQ9Ik03LjMyOCAxLjI2MWw4LjY3LTEuMjYxdjcuNTg1bC04LjY3LjA2OXoiLz48cGF0aCBkPSJNMTYgOC40NDlsLS4wMDIgNy41NTEtOC42Ny0xLjIyLS4wMTItNi4zNDV6Ii8%2BPC9nPjwvc3ZnPg==)](https://ci.appveyor.com/project/wyvernnot/qiniu-webpack-plugin)
 [![](https://img.shields.io/coveralls/wyvernnot/qiniu-webpack-plugin.svg)](https://coveralls.io/github/wyvernnot/qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/dm/qiniu-webpack-plugin.svg)](http://npm-stat.com/charts.html?package=qiniu-webpack-plugin)
 [![](https://img.shields.io/npm/l/qiniu-webpack-plugin.svg)](https://github.com/wyvernnot/qiniu-webpack-plugin/blob/master/LICENSE)
+
 > 把 Webpack 打包出来的 assets 传到 七牛云存储上。
 
 
