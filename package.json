@@ -35,7 +35,8 @@
   "homepage": "https://github.com/wyvernnot/qiniu-webpack-plugin#readme",
   "dependencies": {
     "promise": "^7.1.1",
-    "qiniu": "^6.1.9"
+    "qiniu": "^6.1.9",
+    "upath": "^0.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",

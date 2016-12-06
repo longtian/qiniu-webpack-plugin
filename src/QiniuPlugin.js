@@ -1,6 +1,6 @@
 import qiniu from 'qiniu';
 import Promise from 'promise';
-import { join } from 'path';
+import { join } from 'upath';
 
 class QiniuPlugin {
 
