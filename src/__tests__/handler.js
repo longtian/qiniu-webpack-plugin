@@ -17,19 +17,19 @@ describe('handler', () => {
         plugin: (event, cb) => {
           handler = cb;
         }
-      }
+      };
       plugin.apply(compiler);
     });
 
-    it('without filter', done => {
-      const qiniu = require('qiniu');
+    it('without filter', (done) => {
+      const qiniu = require('qiniu'); // eslint-disable-line global-require
       handler({
         assets: {
-          'a': {
+          a: {
             emitted: true,
             existsAt: 'mockExistsAt'
           },
-          'b': {
+          b: {
             emitted: true,
             existsAt: 'mockExistsAt'
           }
@@ -38,9 +38,9 @@ describe('handler', () => {
       }, done);
       expect(qiniu.io.putFile).toHaveBeenCalledTimes(2);
       expect(qiniu.io.putFile.mock.calls[0].slice(0, 3))
-        .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt'])
+        .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt']);
       expect(qiniu.io.putFile.mock.calls[1].slice(0, 3))
-        .toEqual(['mockToken', 'mockHash/b', 'mockExistsAt'])
+        .toEqual(['mockToken', 'mockHash/b', 'mockExistsAt']);
     });
   });
 
@@ -56,7 +56,7 @@ describe('handler', () => {
         path: '[hash]',
         log: jest.fn(),
         include: [
-          "a",
+          'a',
           /^c$/
         ]
       });
@@ -64,25 +64,25 @@ describe('handler', () => {
         plugin: (event, cb) => {
           handler = cb;
         }
-      }
+      };
       plugin.apply(compiler);
     });
 
-    it('with filter', done => {
-      const qiniu = require('qiniu');
+    it('with filter', (done) => {
+      const qiniu = require('qiniu'); // eslint-disable-line global-require
       qiniu.io.putFile.mockClear();
       qiniu.rs.PutPolicy.mockClear();
       handler({
         assets: {
-          'a': {
+          a: {
             emitted: true,
             existsAt: 'mockExistsAt'
           },
-          'b': {
+          b: {
             emitted: true,
             existsAt: 'mockExistsAt'
           },
-          'c': {
+          c: {
             emitted: true,
             existsAt: 'mockExistsAt'
           }
@@ -92,14 +92,14 @@ describe('handler', () => {
 
       expect(qiniu.rs.PutPolicy).toHaveBeenCalledTimes(2);
       expect(qiniu.rs.PutPolicy.mock.calls)
-        .toEqual([['mockBucket:mockHash/a'], ['mockBucket:mockHash/c']])
+        .toEqual([['mockBucket:mockHash/a'], ['mockBucket:mockHash/c']]);
 
       expect(qiniu.io.putFile).toHaveBeenCalledTimes(2);
       expect(qiniu.io.putFile.mock.calls[0].slice(0, 3))
-        .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt'])
+        .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt']);
       expect(qiniu.io.putFile.mock.calls[1].slice(0, 3))
-        .toEqual(['mockToken', 'mockHash/c', 'mockExistsAt'])
-    })
+        .toEqual(['mockToken', 'mockHash/c', 'mockExistsAt']);
+    });
   });
 
   describe('error', () => {
@@ -116,20 +116,20 @@ describe('handler', () => {
         plugin: (event, cb) => {
           handler = cb;
         }
-      }
+      };
       plugin.apply(compiler);
     });
 
-    it('when put file', done => {
-      const qiniu = require('qiniu');
+    it('when put file', (done) => {
+      const qiniu = require('qiniu'); // eslint-disable-line global-require
       qiniu.io.putFile.mockClear();
       qiniu.io.putFile = jest.fn((...args) => {
-        args[args.length - 1](new Error('error'))
+        args[args.length - 1](new Error('error'));
       });
       qiniu.rs.PutPolicy.mockClear();
       handler({
         assets: {
-          'a': {
+          a: {
             emitted: true,
             existsAt: 'mockExistsAt'
           }
@@ -139,6 +139,6 @@ describe('handler', () => {
         expect(error);
         done();
       });
-    })
+    });
   });
 });
