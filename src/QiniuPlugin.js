@@ -1,6 +1,7 @@
 import qiniu from 'qiniu';
 import Promise from 'promise';
-import { join } from 'upath';
+import { join } from 'path';
+import slash from 'slash';
 
 class QiniuPlugin {
 
@@ -42,7 +43,7 @@ class QiniuPlugin {
         }
         return valid;
       }).map((fileName) => {
-        const key = join(path, fileName);
+        const key = slash(join(path, fileName));
         const putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
         const token = putPolicy.token();
         const extra = new qiniu.io.PutExtra();
