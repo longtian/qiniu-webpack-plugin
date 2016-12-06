@@ -10,7 +10,8 @@
     "example:dev": "npm run-script compile && webpack -d --config example/webpack.dev.js",
     "example:production": "npm run-script compile && NODE_ENV=production webpack -p --config example/webpack.production.js",
     "eslint": "eslint src",
-    "test": "eslint src && jest && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+    "test:coveralls": "npm run test && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "test": "jest"
   },
   "jest": {
     "collectCoverage": true,
