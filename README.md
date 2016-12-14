@@ -72,3 +72,8 @@ https://github.com/wyvernnot/qiniu-webpack-plugin/tree/master/example
 ## 版权声明
 
 `Qiniu` 是上海七牛信息技术有限公司的注册商标， `qiniu-webpack-plugin` 是本人自己写的模块，非官方，采用 MIT 开源协议发布。
+
+## Better Option
+
+如果你的项目文件比较多，实际上用官方的 [`qshell`](http://developer.qiniu.com/code/v6/tool/qshell.html) 要比 `Webpack` 插件好用的多得多。
+当然，你也可以用 npm install [qshell-cli](https://github.com/wyvernnot/qshell-cli) 直接安装这个工具。
