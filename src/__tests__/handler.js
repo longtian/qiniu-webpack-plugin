@@ -71,7 +71,6 @@ describe('handler', () => {
     it('with filter', (done) => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
       qiniu.putFile.mockClear();
-      qiniu.rs.PutPolicy.mockClear();
       handler({
         assets: {
           a: {
@@ -89,10 +88,6 @@ describe('handler', () => {
         },
         hash: 'mockHash'
       }, done);
-
-      expect(qiniu.rs.PutPolicy).toHaveBeenCalledTimes(1);
-      expect(qiniu.rs.PutPolicy.mock.calls)
-        .toEqual([[{'scope': 'mockBucket'}]]);
 
       expect(qiniu.putFile).toHaveBeenCalledTimes(2);
       expect(qiniu.putFile.mock.calls[0].slice(0, 3))
@@ -127,7 +122,6 @@ describe('handler', () => {
       qiniu.putFile = jest.fn((...args) => {
         args[args.length - 1](new Error('error'));
       });
-      qiniu.rs.PutPolicy.mockClear();
       handler({
         assets: {
           a: {

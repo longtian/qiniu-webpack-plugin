@@ -6,26 +6,26 @@ const putFile = jest.fn((token, key, existsAt, extra, cb) => {
 module.exports = {
   auth: {
     digest: {
-      Mac: jest.fn(() => 'mockMac')
+      Mac: class {}
     }
   },
   conf: {
-    Config: jest.fn(() => 'mockConfig')
+    Config: class {}
   },
   rs: {
-    PutPolicy: jest.fn(() => (
-      {
-        uploadToken: uploadToken
+    PutPolicy: class {
+      constructor() {
+        this.uploadToken = uploadToken
       }
-    ))
+    }
   },
   form_up: {
-    FormUploader: () => (
-      {
-        putFile: putFile
+    FormUploader: class {
+      constructor() {
+        this.putFile = putFile
       }
-    ),
-    PutExtra: jest.fn(() => 'mockExtra'),
+    },
+    PutExtra: class {}
   },
   uploadToken,
   putFile
