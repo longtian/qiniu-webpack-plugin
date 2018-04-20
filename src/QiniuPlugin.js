@@ -12,7 +12,7 @@ class QiniuPlugin {
     this.options = Object.assign({}, options);
 
     const mac = new qiniu.auth.digest.Mac(this.options.ACCESS_KEY, this.options.SECRET_KEY);
-    const putPolicy = new qiniu.rs.PutPolicy({scope: this.options.bucket});
+    const putPolicy = new qiniu.rs.PutPolicy({ scope: this.options.bucket });
     this.token = putPolicy.uploadToken(mac);
 
     const config = new qiniu.conf.Config();
@@ -59,7 +59,7 @@ class QiniuPlugin {
         const promise = new Promise((resolve, reject) => {
           const begin = Date.now();
           // http://developer.qiniu.com/code/v6/sdk/nodejs.html#5
-          this.uploader.putFile(this.token, key, assets[fileName].existsAt, extra,  (err, ret) => {
+          this.uploader.putFile(this.token, key, assets[fileName].existsAt, extra, (err, ret) => {
             if (!err) {
               resolve({
                 ...ret,

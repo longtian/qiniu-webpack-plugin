@@ -1,14 +1,14 @@
-const uploadToken = jest.fn(() => 'mockToken')
+const uploadToken = jest.fn(() => 'mockToken');
 const putFile = jest.fn((token, key, existsAt, extra, cb) => {
-  process.nextTick(function() {
+  process.nextTick(() => {
     // eslint-disable-next-line no-use-before-define
     if (mock.preventUpload) {
-      cb(new Error('error'))
+      cb(new Error('error'));
     } else {
-      cb()
+      cb();
     }
   });
-})
+});
 
 const mock = {
   auth: {
@@ -22,14 +22,14 @@ const mock = {
   rs: {
     PutPolicy: class {
       constructor() {
-        this.uploadToken = uploadToken
+        this.uploadToken = uploadToken;
       }
     }
   },
   form_up: {
     FormUploader: class {
       constructor() {
-        this.putFile = putFile
+        this.putFile = putFile;
       }
     },
     PutExtra: class {}
