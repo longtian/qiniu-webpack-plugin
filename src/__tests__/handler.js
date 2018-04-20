@@ -36,10 +36,10 @@ describe('handler', () => {
         },
         hash: 'mockHash'
       }, done);
-      expect(qiniu.io.putFile).toHaveBeenCalledTimes(2);
-      expect(qiniu.io.putFile.mock.calls[0].slice(0, 3))
+      expect(qiniu.putFile).toHaveBeenCalledTimes(2);
+      expect(qiniu.putFile.mock.calls[0].slice(0, 3))
         .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt']);
-      expect(qiniu.io.putFile.mock.calls[1].slice(0, 3))
+      expect(qiniu.putFile.mock.calls[1].slice(0, 3))
         .toEqual(['mockToken', 'mockHash/b', 'mockExistsAt']);
     });
   });
@@ -70,7 +70,7 @@ describe('handler', () => {
 
     it('with filter', (done) => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
-      qiniu.io.putFile.mockClear();
+      qiniu.putFile.mockClear();
       qiniu.rs.PutPolicy.mockClear();
       handler({
         assets: {
@@ -94,10 +94,10 @@ describe('handler', () => {
       expect(qiniu.rs.PutPolicy.mock.calls)
         .toEqual([['mockBucket:mockHash/a'], ['mockBucket:mockHash/c']]);
 
-      expect(qiniu.io.putFile).toHaveBeenCalledTimes(2);
-      expect(qiniu.io.putFile.mock.calls[0].slice(0, 3))
+      expect(qiniu.putFile).toHaveBeenCalledTimes(2);
+      expect(qiniu.putFile.mock.calls[0].slice(0, 3))
         .toEqual(['mockToken', 'mockHash/a', 'mockExistsAt']);
-      expect(qiniu.io.putFile.mock.calls[1].slice(0, 3))
+      expect(qiniu.putFile.mock.calls[1].slice(0, 3))
         .toEqual(['mockToken', 'mockHash/c', 'mockExistsAt']);
     });
   });
@@ -122,8 +122,8 @@ describe('handler', () => {
 
     it('when put file', (done) => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
-      qiniu.io.putFile.mockClear();
-      qiniu.io.putFile = jest.fn((...args) => {
+      qiniu.putFile.mockClear();
+      qiniu.putFile = jest.fn((...args) => {
         args[args.length - 1](new Error('error'));
       });
       qiniu.rs.PutPolicy.mockClear();
@@ -163,7 +163,7 @@ describe('handler', () => {
 
     it('without filter', (done) => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
-      qiniu.io.putFile.mockClear();
+      qiniu.putFile.mockClear();
       handler({
         assets: {
           a: {
@@ -177,10 +177,10 @@ describe('handler', () => {
         },
         hash: 'mockHash'
       }, done);
-      expect(qiniu.io.putFile).toHaveBeenCalledTimes(2);
-      expect(qiniu.io.putFile.mock.calls[0].slice(0, 3))
+      expect(qiniu.putFile).toHaveBeenCalledTimes(2);
+      expect(qiniu.putFile.mock.calls[0].slice(0, 3))
         .toEqual(['mockToken', 'a', 'mockExistsAt']);
-      expect(qiniu.io.putFile.mock.calls[1].slice(0, 3))
+      expect(qiniu.putFile.mock.calls[1].slice(0, 3))
         .toEqual(['mockToken', 'index.html', 'mockExistsAt']);
     });
   });

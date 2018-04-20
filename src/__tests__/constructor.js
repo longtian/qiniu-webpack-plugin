@@ -7,12 +7,6 @@ describe('QiniuPlugin', () => {
         new QiniuPlugin(); // eslint-disable-line no-new
       }).toThrow();
     });
-
-    it('will set qiniu global options', () => {
-      const qiniu = require('qiniu'); // eslint-disable-line global-require
-      new QiniuPlugin({ ACCESS_KEY: 'a', SECRET_KEY: 's' }); // eslint-disable-line no-new
-      expect(qiniu.conf).toEqual({ ACCESS_KEY: 'a', SECRET_KEY: 's' });
-    });
   });
 
   it('will call plugin method when applied', () => {
