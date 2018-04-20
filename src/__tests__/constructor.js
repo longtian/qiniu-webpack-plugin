@@ -7,7 +7,7 @@ describe('QiniuPlugin', () => {
         new QiniuPlugin(); // eslint-disable-line no-new
       }).toThrow();
     });
-;
+
     it('will set members', () => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
       qiniu.uploadToken.mockClear();

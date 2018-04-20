@@ -57,7 +57,7 @@ class QiniuPlugin {
         const extra = new qiniu.form_up.PutExtra();
 
         const promise = new Promise((resolve, reject) => {
-          const begin = Date.now();;
+          const begin = Date.now();
           // http://developer.qiniu.com/code/v6/sdk/nodejs.html#5
           this.uploader.putFile(this.token, key, assets[fileName].existsAt, extra, (err, ret) => {
             if (!err) {
