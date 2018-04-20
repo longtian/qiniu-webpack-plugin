@@ -1,4 +1,4 @@
-const qiniu = require('qiniu');
+import qiniu from 'qiniu';
 import Promise from 'promise';
 import { join } from 'path';
 import slash from 'slash';
@@ -55,7 +55,6 @@ class QiniuPlugin {
       }).map((fileName) => {
         const key = slash(join(path, fileName));
         const extra = new qiniu.form_up.PutExtra();
-        // extra.mimeType = mime.getType(fileName);
 
         const promise = new Promise((resolve, reject) => {
           const begin = Date.now();
