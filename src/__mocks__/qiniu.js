@@ -1,9 +1,16 @@
 const uploadToken = jest.fn(() => 'mockToken')
 const putFile = jest.fn((token, key, existsAt, extra, cb) => {
-  process.nextTick(cb());
+  process.nextTick(function() {
+    // eslint-disable-next-line no-use-before-define
+    if (mock.preventUpload) {
+      cb(new Error('error'))
+    } else {
+      cb()
+    }
+  });
 })
 
-module.exports = {
+const mock = {
   auth: {
     digest: {
       Mac: class {}
@@ -28,5 +35,8 @@ module.exports = {
     PutExtra: class {}
   },
   uploadToken,
-  putFile
+  putFile,
+  preventUpload: false
 };
+
+module.exports = mock;

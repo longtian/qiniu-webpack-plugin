@@ -118,10 +118,7 @@ describe('handler', () => {
     it('when put file', (done) => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
       qiniu.putFile.mockClear();
-      const origPutFile = qiniu.putFile
-      qiniu.putFile = jest.fn((...args) => {
-        args[args.length - 1](new Error('error'));
-      });
+      qiniu.preventUpload = true;
       handler({
         assets: {
           a: {
@@ -132,7 +129,7 @@ describe('handler', () => {
         hash: 'mockHash'
       }, (error) => {
         expect(error);
-        qiniu.putFile = origPutFile
+        qiniu.preventUpload = false;
         done();
       });
     });
