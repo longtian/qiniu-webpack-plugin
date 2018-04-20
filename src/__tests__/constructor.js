@@ -8,10 +8,14 @@ describe('QiniuPlugin', () => {
       }).toThrow();
     });
 
-    it('will set qiniu global options', () => {
+    it('will set members', () => {
       const qiniu = require('qiniu'); // eslint-disable-line global-require
-      new QiniuPlugin({ ACCESS_KEY: 'a', SECRET_KEY: 's' }); // eslint-disable-line no-new
-      expect(qiniu.conf).toEqual({ ACCESS_KEY: 'a', SECRET_KEY: 's' });
+      qiniu.uploadToken.mockClear();
+      const plugin = new QiniuPlugin({ ACCESS_KEY: 'a', SECRET_KEY: 's' }); // eslint-disable-line no-new
+      expect(qiniu.uploadToken).toHaveBeenCalledTimes(1);
+      expect(qiniu.uploadToken.mock.calls[0][0])
+        .toBeInstanceOf(qiniu.auth.digest.Mac);
+      expect(plugin.token).toEqual('mockToken');
     });
   });
 

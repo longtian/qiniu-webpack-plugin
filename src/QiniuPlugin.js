@@ -10,8 +10,19 @@ class QiniuPlugin {
       throw new Error('ACCESS_KEY and SECRET_KEY must be provided');
     }
     this.options = Object.assign({}, options);
-    qiniu.conf.ACCESS_KEY = this.options.ACCESS_KEY;
-    qiniu.conf.SECRET_KEY = this.options.SECRET_KEY;
+
+    const mac = new qiniu.auth.digest.Mac(this.options.ACCESS_KEY, this.options.SECRET_KEY);
+    const putPolicy = new qiniu.rs.PutPolicy({ scope: this.options.bucket });
+    this.token = putPolicy.uploadToken(mac);
+
+    const config = new qiniu.conf.Config();
+    // 空间对应的机房 https://developer.qiniu.com/kodo/sdk/1289/nodejs#5
+    // config.zone = qiniu.zone.Zone_z0;
+    // 是否使用https域名
+    // config.useHttpsDomain = true;
+    // 上传是否使用cdn加速
+    // config.useCdnDomain = true;
+    this.uploader = new qiniu.form_up.FormUploader(config);
   }
 
   apply(compiler) {
@@ -19,7 +30,6 @@ class QiniuPlugin {
       const assets = compilation.assets;
       const hash = compilation.hash;
       const {
-        bucket,
         include,
       } = this.options;
       let {
@@ -44,13 +54,12 @@ class QiniuPlugin {
         return valid;
       }).map((fileName) => {
         const key = slash(join(path, fileName));
-        const putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
-        const token = putPolicy.token();
-        const extra = new qiniu.io.PutExtra();
+        const extra = new qiniu.form_up.PutExtra();
 
         const promise = new Promise((resolve, reject) => {
           const begin = Date.now();
-          qiniu.io.putFile(token, key, assets[fileName].existsAt, extra, (err, ret) => {
+          // http://developer.qiniu.com/code/v6/sdk/nodejs.html#5
+          this.uploader.putFile(this.token, key, assets[fileName].existsAt, extra, (err, ret) => {
             if (!err) {
               resolve({
                 ...ret,
