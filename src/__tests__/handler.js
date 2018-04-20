@@ -1,5 +1,5 @@
 import QiniuPlugin from '../QiniuPlugin';
-
+;
 describe('handler', () => {
   let handler = null;
 
