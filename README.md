@@ -38,7 +38,8 @@ var qiniuPlugin = new QiniuPlugin({
   ACCESS_KEY: '',
   SECRET_KEY: '',
   bucket: 'my-qiniu-webpack',
-  path: '[hash]'
+  path: '[hash]',
+  insertOnly: 1,
 });
 
 // 这里是 Webpack 的配置
