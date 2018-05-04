@@ -19,13 +19,8 @@ class QiniuPlugin {
       const assets = compilation.assets;
       const hash = compilation.hash;
       const {
-        ACCESS_KEY,
-        SECRET_KEY,
         bucket,
         include,
-        path: path1,
-        log,
-        ...props
       } = this.options;
       let {
         path = '[hash]',
@@ -49,7 +44,7 @@ class QiniuPlugin {
         return valid;
       }).map((fileName) => {
         const key = slash(join(path, fileName));
-        const putPolicy = new qiniu.rs.PutPolicy({ scope: `${bucket}:${key}`, ...props });
+        const putPolicy = new qiniu.rs.PutPolicy({ scope: `${bucket}:${key}`, insertOnly: 1 });
         const token = putPolicy.token();
         const extra = new qiniu.io.PutExtra();
 
