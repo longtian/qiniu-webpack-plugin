@@ -44,7 +44,7 @@ class QiniuPlugin {
         return valid;
       }).map((fileName) => {
         const key = slash(join(path, fileName));
-        const putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
+        const putPolicy = new qiniu.rs.PutPolicy({ scope: `${bucket}:${key}`, insertOnly: 1 });
         const token = putPolicy.token();
         const extra = new qiniu.io.PutExtra();
 
