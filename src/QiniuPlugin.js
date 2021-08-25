@@ -15,66 +15,77 @@ class QiniuPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('after-emit', (compilation, callback) => {
-      const assets = compilation.assets;
-      const hash = compilation.hash;
-      const {
-        bucket,
-        include,
-      } = this.options;
-      let {
-        path = '[hash]',
-      } = this.options;
+    // Webpack 4+
+    if (compiler.hooks) {
+      compiler.hooks.emit.tapAsync('qiniu-webpack-plugin', (compilation, callback) => {
+        this.resolve(compilation, callback);
+      });
+    } else {
+      compiler.plugin('after-emit', (compilation, callback) => {
+        this.resolve(compilation, callback);
+      });
+    }
+  }
 
-      path = path.replace('[hash]', hash);
+  resolve(compilation, callback) {
+    const assets = compilation.assets;
+    const hash = compilation.hash;
+    const {
+      bucket,
+      include,
+    } = this.options;
+    let {
+      path = '[hash]',
+    } = this.options;
 
-      const promises = Object.keys(assets).filter((fileName) => {
-        let valid = assets[fileName].emitted;
-        if (include) {
-          valid = valid
-            && include.some(
-              (includeFileName) => {
-                if (includeFileName instanceof RegExp) {
-                  return includeFileName.test(fileName);
-                }
-                return includeFileName === fileName;
-              },
-            );
-        }
-        return valid;
-      }).map((fileName) => {
-        const key = slash(join(path, fileName));
-        const putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
-        const token = putPolicy.token();
-        const extra = new qiniu.io.PutExtra();
+    path = path.replace('[hash]', hash);
 
-        const promise = new Promise((resolve, reject) => {
-          const begin = Date.now();
-          qiniu.io.putFile(token, key, assets[fileName].existsAt, extra, (err, ret) => {
-            if (!err) {
-              resolve({
-                ...ret,
-                duration: Date.now() - begin,
-              });
-            } else {
-              reject(err);
-            }
-          });
+    const promises = Object.keys(assets).filter((fileName) => {
+      let valid = assets[fileName].emitted;
+      if (include) {
+        valid = valid
+          && include.some(
+            (includeFileName) => {
+              if (includeFileName instanceof RegExp) {
+                return includeFileName.test(fileName);
+              }
+              return includeFileName === fileName;
+            },
+          );
+      }
+      return valid;
+    }).map((fileName) => {
+      const key = slash(join(path, fileName));
+      const putPolicy = new qiniu.rs.PutPolicy(`${bucket}:${key}`);
+      const token = putPolicy.token();
+      const extra = new qiniu.io.PutExtra();
+
+      const promise = new Promise((resolve, reject) => {
+        const begin = Date.now();
+        qiniu.io.putFile(token, key, assets[fileName].existsAt, extra, (err, ret) => {
+          if (!err) {
+            resolve({
+              ...ret,
+              duration: Date.now() - begin,
+            });
+          } else {
+            reject(err);
+          }
         });
-
-        return promise;
       });
 
-      Promise
-        .all(promises)
-        .then((res) => {
-          console.log(res); // eslint-disable-line no-console
-          callback();
-        })
-        .catch((e) => {
-          callback(e);
-        });
+      return promise;
     });
+
+    Promise
+      .all(promises)
+      .then((res) => {
+        console.log(res); // eslint-disable-line no-console
+        callback();
+      })
+      .catch((e) => {
+        callback(e);
+      });
   }
 }
 
